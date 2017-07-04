@@ -15,7 +15,7 @@ const enrouten = require('express-enrouten')
 
 const logger = require('../logger').logger
 const loggerExpress = require('../logger').loggerExpress
-const errorrMiddleware = require('quantal-errors').expressErrorMiddleware()
+const errorrMiddleware = require('quantal-errors').expressErrorMiddleware
 const AppErrors = require('../exceptions')
 const errorMappings = []
 
