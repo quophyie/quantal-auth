@@ -1,0 +1,56 @@
+version: '2'
+networks:
+  default:
+    external:
+      name: compose_container_services_networks
+services:
+
+  quantal_auth:
+    build:
+      context: ./../../
+      dockerfile: ./docker/Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - DB_HOST=quantal_auth_db
+      - DB_PORT=5432
+      - DB_NAME=quantal_auth_db
+      - JWT_SECRET=${JWT_SECRET}
+      - PASSWORD_SALT=${PASSWORD_SALT}
+      - JWT_TYPE=${JWT_TYPE}
+      - JWT_ALGORITHM=${JWT_ALGORITHM}
+      - API_GATEWAY_ENDPOINT=${API_GATEWAY_ENDPOINT}
+    links:
+      - quantal_auth_db
+    depends_on:
+      - quantal_auth_db
+    command: ["/wait-for-it.sh", "quantal_auth_db:5432", "--","npm","--prefix", "/opt/app/", "start"]
+    volumes:
+      - /private/var/docker/log/quantal_auth:/var/log
+
+    #networks:
+     # - container_services_networks
+
+  # The postgres database
+  quantal_auth_db:
+    restart: always
+    image: sameersbn/postgresql:9.6-2
+    ports:
+      - "5434:5432"
+    environment:
+      - DEBUG=false
+      - DB_USER=postgres
+      - DB_PASS=postgres
+      - DB_NAME=quantal_auth_db
+      - PG_PASSWORD=postgres
+      - DB_TEMPLATE=
+
+      - DB_EXTENSION=
+
+      - REPLICATION_MODE=
+      - REPLICATION_USER=
+      - REPLICATION_PASS=
+      - REPLICATION_SSLMODE=
+
+    volumes:
+      - /private/var/docker/postgresql/quantal_auth_db:/var/lib/postgresql

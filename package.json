@@ -1,0 +1,68 @@
+{
+  "name": "quantal-auth",
+  "version": "0.0.1",
+  "private": true,
+  "engines": {
+    "node": ">=6.0.0 "
+  },
+  "scripts": {
+    "start": "npm run migrations && node index",
+    "migrations": "node_modules/knex/bin/cli.js migrate:latest",
+    "test": "NODE_ENV=test node_modules/mocha/bin/mocha test/**/*tests.js  "
+  },
+  "keywords": [
+    "authentication",
+    "jwt",
+    "jsonwebtoken",
+    "jwt-express"
+  ],
+  "description": "A module that provides authentication using jwt ",
+  "author": "quophyid@yahoo.com",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.15.3",
+    "bluebird": "^3.5.0",
+    "body-parser": "~1.16.0",
+    "bookshelf": "^0.10.3",
+    "bookshelf-camelcase": "^1.1.4",
+    "bookshelf-cascade-delete": "^2.0.1",
+    "bookshelf-modelbase": "^2.10.4",
+    "cookie-parser": "~1.4.3",
+    "cors": "^2.8.3",
+    "create-error": "^0.3.1",
+    "debug": "~2.6.0",
+    "express": "^4.13.4",
+    "express-enrouten": "^1.3.0",
+    "hoek": "^4.1.1",
+    "joi": "^10.2.2",
+    "jsonwebtoken": "^7.4.1",
+    "knex": "^0.12.9",
+    "lodash": "^4.17.4",
+    "morgan": "~1.7.0",
+    "pg": "^6.4.0",
+    "quant-beat": "^0.0.10",
+    "quantal-base-model": "0.0.6",
+    "quantal-errors": "^0.0.10",
+    "qute-bookshelf-repository": "^0.0.1",
+    "standard": "^10.0.2",
+    "urlencode": "^1.1.0"
+  },
+  "devDependencies": {
+    "code": "^4.0.0",
+    "eslint": "^3.17.1",
+    "eslint-config-standard": "^7.0.1",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-node": "^4.2.1",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^2.1.1",
+    "http-status": "^1.0.1",
+    "mocha": "^3.2.0",
+    "moment": "^2.17.1",
+    "nock": "^9.0.13",
+    "sinon": "^2.3.6",
+    "sinon-stub-promise": "^4.0.0",
+    "standard": "^9.0.1",
+    "supertest": "^3.0.0",
+    "supertest-promised": "^1.0.0"
+  }
+}
