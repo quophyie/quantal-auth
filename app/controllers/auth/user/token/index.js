@@ -94,7 +94,7 @@ module.exports = (router) => {
     (req, res, next) => {
       const token = parseToken(req) || req.body.token
       userTokenFacade.verifyToken(token)
-      .then(result => res.json({message: 'OK'}))
+      .then(decoded => res.json(decoded))
       .catch(next)
     })
 }

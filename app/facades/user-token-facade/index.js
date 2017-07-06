@@ -58,7 +58,6 @@ module.exports = Object.freeze({
   .then(jtis => userTokenService.deleteAllByJti(jtis))
   },
 
-
   deleteSingleToken (jti) {
     return userTokenService
       .deleteByJti(jti)
@@ -66,9 +65,14 @@ module.exports = Object.freeze({
   },
 
   verifyToken (token) {
+    let decodedToken
     return authService
       .verify(token)
-      .then(decodedToken => userTokenService.checkValidity(decodedToken.jti))
+      .then(_decodedToken => {
+        decodedToken = _decodedToken
+        return userTokenService.checkValidity(decodedToken.jti)
+      })
+      .then(result => decodedToken)
   }
 
 })

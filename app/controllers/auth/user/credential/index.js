@@ -4,7 +4,7 @@
 'use strict'
 const userTokenFacade = require('../../../../facades/user-token-facade/index')
 const Joi = require('joi')
-const expressJoi = require('express-joi-validator')
+const Celebrate = require('create-error')
 
 const emailSchema = {
   body: {
@@ -25,7 +25,7 @@ module.exports = (router) => {
    * creates new credentials for the user identified by the given email
    */
   router.post('/',
-    expressJoi(idOrEmailSchema),
+    Celebrate(idOrEmailSchema),
     (req, res, next) => {
       const idOrEmail = req.body['userId'] || req.body['email']
       userTokenFacade.createCredential(idOrEmail)
@@ -37,7 +37,7 @@ module.exports = (router) => {
    * Deletes the credetials of the given user using their email
    */
   router.delete('/:email',
-    expressJoi(emailSchema),
+    Celebrate(emailSchema),
     (req, res, next) => {
       const idOrEmail = req.params['email']
       userTokenFacade.deleteUser(idOrEmail)
