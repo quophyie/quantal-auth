@@ -4,7 +4,7 @@
 'use strict'
 const userTokenFacade = require('../../../../facades/user-token-facade/index')
 const Joi = require('joi')
-const Celebrate = require('create-error')
+const Celebrate = require('celebrate')
 
 const emailSchema = {
   body: {
@@ -18,14 +18,20 @@ const idSchema = {
   }
 }
 
-const idOrEmailSchema = Joi.alternatives().try(emailSchema, idSchema)
+// const idOrEmailSchema = Joi.alternatives().try(emailSchema, idSchema)
+const idOrEmailSchema = {
+  body: {
+    userId: Joi.number(),
+    email: Joi.string().email()
+  }
+}
 
 module.exports = (router) => {
   /**
    * creates new credentials for the user identified by the given email
    */
   router.post('/',
-    Celebrate(idOrEmailSchema),
+    Celebrate(idOrEmailSchema, {stripUnknown: true}),
     (req, res, next) => {
       const idOrEmail = req.body['userId'] || req.body['email']
       userTokenFacade.createCredential(idOrEmail)
@@ -37,7 +43,7 @@ module.exports = (router) => {
    * Deletes the credetials of the given user using their email
    */
   router.delete('/:email',
-    Celebrate(emailSchema),
+    Celebrate(emailSchema, {stripUnknown: true}),
     (req, res, next) => {
       const idOrEmail = req.params['email']
       userTokenFacade.deleteUser(idOrEmail)
