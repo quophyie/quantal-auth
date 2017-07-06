@@ -26,7 +26,7 @@ class ApiGatewayService {
     }
 
     const endponint = `${this._apiGatewayEndpoint}${constants.JWT_CREDENTIAL_URL(userId)}`
-    return axios.post(endponint, null, {headers: {'content-type': 'application/json'}})
+    return axios.post(endponint, {}, {headers: {'content-type': 'application/json'}})
       .then((response) => {
         logger.info(response.data, 'credentials created successfully for user identified by %s', userId)
         return response.data
@@ -75,7 +75,7 @@ class ApiGatewayService {
     const endponint = `${this._apiGatewayEndpoint}${constants.CONSUMERS_URL}/${userId}`
     return axios.delete(endponint, null, {headers: {'content-type': 'application/json'}})
             .then((response) => {
-              logger.info(response.data, 'credentials deleted successfully for user identified by %s', userId)
+              logger.info({data: response.data}, 'credentials deleted successfully for user identified by %s', userId)
               return response.data
             })
             .catch(function (error) {

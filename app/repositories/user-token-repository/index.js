@@ -7,6 +7,10 @@ const BaseRepository = require('qute-bookshelf-repository')
 const Bookshelf = require('bookshelf')(null)
 const CommonErrors = require('quantal-errors')
 
+const convertToJson = (token) => {
+  if (token) return token.toJSON()
+  return token
+}
 class UserTokenRepository extends BaseRepository {
   constructor () {
     super(UserToken)
@@ -14,6 +18,7 @@ class UserTokenRepository extends BaseRepository {
 
   findByJti (jti) {
     return UserToken.findByJti(jti)
+            .then(convertToJson)
             .catch(Bookshelf.NotFoundError, () => Promise.reject(new CommonErrors.NotFoundError('NotFoundError')))
             .catch(Bookshelf.EmptyError, () => Promise.reject(new CommonErrors.NotFoundError('NotFoundError')))
             .catch(err => Promise.reject(CommonErrors.utils.bookshelfToApp(err)))
@@ -21,6 +26,7 @@ class UserTokenRepository extends BaseRepository {
 
   deleteByJti (jti) {
     return UserToken.deleteByJti(jti)
+            .then(convertToJson)
             .catch(Bookshelf.NotFoundError, () => Promise.reject(new CommonErrors.NotFoundError('NotFoundError')))
             .catch(Bookshelf.EmptyError, () => Promise.reject(new CommonErrors.NotFoundError('NotFoundError')))
             .catch(err => Promise.reject(CommonErrors.utils.bookshelfToApp(err)))
@@ -28,6 +34,7 @@ class UserTokenRepository extends BaseRepository {
 
   deleteAllByJtis (jtis) {
     return UserToken.deleteAllByJtis(jtis)
+            .then(convertToJson)
             .catch(Bookshelf.NotFoundError, () => Promise.reject(new CommonErrors.NotFoundError('NotFoundError')))
             .catch(Bookshelf.EmptyError, () => Promise.reject(new CommonErrors.NotFoundError('NotFoundError')))
             .catch(err => Promise.reject(CommonErrors.utils.bookshelfToApp(err)))

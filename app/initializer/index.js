@@ -17,7 +17,9 @@ const logger = require('../logger').logger
 const loggerExpress = require('../logger').loggerExpress
 const errorrMiddleware = require('quantal-errors').expressErrorMiddleware
 const AppErrors = require('../exceptions')
-const errorMappings = []
+const errorMappings = {
+  unauthorized: ['TokenVerificationError', 'TokenExpiredError']
+}
 
 class Initializer {
   /**

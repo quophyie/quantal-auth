@@ -223,6 +223,12 @@ bookshelf@^0.10.3:
     inherits "~2.0.1"
     lodash "^4.13.1"
 
+boom@2.6.x:
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/boom/-/boom-2.6.1.tgz#4dc8ef9b6dfad9c43bbbfbe71fa4c21419f22753"
+  dependencies:
+    hoek "2.x.x"
+
 boom@^3.2.1:
   version "3.2.2"
   resolved "https://registry.yarnpkg.com/boom/-/boom-3.2.2.tgz#0f0cc5d04adc5003b8c7d71f42cca7271fef0e78"
@@ -286,6 +292,13 @@ caller@^1.0.0:
 callsites@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/callsites/-/callsites-0.2.0.tgz#afab96262910a7f33c19a5775825c69f34e350ca"
+
+celebrate@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/celebrate/-/celebrate-4.0.1.tgz#0c36f2b59ead2e1161c45dd3a8398dc248b2265a"
+  dependencies:
+    escape-html "1.0.3"
+    fastseries "1.7.2"
 
 "chai@>=1.9.2 <4.0.0":
   version "3.5.0"
@@ -670,7 +683,7 @@ es6-weak-map@^2.0.1:
     es6-iterator "^2.0.1"
     es6-symbol "^3.1.1"
 
-escape-html@~1.0.3:
+escape-html@1.0.3, escape-html@~1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/escape-html/-/escape-html-1.0.3.tgz#0258eae4d3d0c0974de1c169188ef0051d1d1988"
 
@@ -889,6 +902,14 @@ express-enrouten@^1.3.0:
     debuglog "^1.0.1"
     path-to-regexp "^1.1.1"
 
+express-joi-validator@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/express-joi-validator/-/express-joi-validator-2.0.0.tgz#24e26e6a8327f69985ed72588f00e295dc3e3234"
+  dependencies:
+    boom "2.6.x"
+    extend "2.0.x"
+    joi "6.x.x"
+
 express@^4.13.4:
   version "4.15.3"
   resolved "https://registry.yarnpkg.com/express/-/express-4.15.3.tgz#bab65d0f03aa80c358408972fc700f916944b662"
@@ -922,6 +943,10 @@ express@^4.13.4:
     utils-merge "1.0.0"
     vary "~1.1.1"
 
+extend@2.0.x:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/extend/-/extend-2.0.1.tgz#1ee8010689e7395ff9448241c98652bc759a8260"
+
 extend@^3.0.0:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/extend/-/extend-3.0.1.tgz#a755ea7bc1adfcc5a31ce7e762dbaadc5e636444"
@@ -935,6 +960,13 @@ extglob@^0.3.1:
 fast-levenshtein@~2.0.4:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/fast-levenshtein/-/fast-levenshtein-2.0.6.tgz#3d8a5c66883a16a30ca8643e851f19baa7797917"
+
+fastseries@1.7.2:
+  version "1.7.2"
+  resolved "https://registry.yarnpkg.com/fastseries/-/fastseries-1.7.2.tgz#d22ce13b9433dff3388d91dbd6b8bda9b21a0f4b"
+  dependencies:
+    reusify "^1.0.0"
+    xtend "^4.0.0"
 
 figures@^1.3.5:
   version "1.7.0"
@@ -1462,16 +1494,7 @@ items@2.x.x:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/items/-/items-2.1.1.tgz#8bd16d9c83b19529de5aea321acaada78364a198"
 
-joi@^10.2.2:
-  version "10.6.0"
-  resolved "https://registry.yarnpkg.com/joi/-/joi-10.6.0.tgz#52587f02d52b8b75cdb0c74f0b164a191a0e1fc2"
-  dependencies:
-    hoek "4.x.x"
-    isemail "2.x.x"
-    items "2.x.x"
-    topo "2.x.x"
-
-joi@^6.10.1:
+joi@6.x.x, joi@^6.10.1:
   version "6.10.1"
   resolved "https://registry.yarnpkg.com/joi/-/joi-6.10.1.tgz#4d50c318079122000fe5f16af1ff8e1917b77e06"
   dependencies:
@@ -1479,6 +1502,15 @@ joi@^6.10.1:
     isemail "1.x.x"
     moment "2.x.x"
     topo "1.x.x"
+
+joi@^10.2.2, joi@^10.6.0:
+  version "10.6.0"
+  resolved "https://registry.yarnpkg.com/joi/-/joi-10.6.0.tgz#52587f02d52b8b75cdb0c74f0b164a191a0e1fc2"
+  dependencies:
+    hoek "4.x.x"
+    isemail "2.x.x"
+    items "2.x.x"
+    topo "2.x.x"
 
 joi@^9.0.4:
   version "9.2.0"
@@ -1775,7 +1807,7 @@ mocha@^3.2.0:
     mkdirp "0.5.1"
     supports-color "3.1.2"
 
-moment@2.x.x, moment@^2.10.6, moment@^2.17.1:
+moment@2.x.x, moment@^2.10.6, moment@^2.18.1:
   version "2.18.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.18.1.tgz#c36193dd3ce1c2eed2adb7c802dbbc77a81b1c0f"
 
@@ -1940,6 +1972,10 @@ p-locate@^2.0.0:
 packet-reader@0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/packet-reader/-/packet-reader-0.3.1.tgz#cd62e60af8d7fea8a705ec4ff990871c46871f27"
+
+parse-bearer-token@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/parse-bearer-token/-/parse-bearer-token-0.0.1.tgz#6a9bab9239d7f99d8be89cdff0d98eb50de70729"
 
 parse-glob@^3.0.4:
   version "3.0.4"
@@ -2188,9 +2224,9 @@ quantal-errors@0.0.6:
     lodash "^4.13.0"
     request-promise "^4.2.0"
 
-quantal-errors@^0.0.10:
-  version "0.0.10"
-  resolved "https://registry.yarnpkg.com/quantal-errors/-/quantal-errors-0.0.10.tgz#96dde403bfad25704cadbd5905d72793f2dfba25"
+quantal-errors@^0.0.12:
+  version "0.0.12"
+  resolved "https://registry.yarnpkg.com/quantal-errors/-/quantal-errors-0.0.12.tgz#3ab4d7d40d7f326e105ce4f6b0860d1ce3864b3b"
   dependencies:
     boom "^3.2.1"
     create-error "^0.3.1"
@@ -2371,6 +2407,10 @@ restore-cursor@^1.0.1:
   dependencies:
     exit-hook "^1.0.0"
     onetime "^1.0.0"
+
+reusify@^1.0.0:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/reusify/-/reusify-1.0.1.tgz#f53584367adc825c87431917263fc7aa19118693"
 
 rimraf@^2.2.8, rimraf@~2.4.0:
   version "2.4.5"
