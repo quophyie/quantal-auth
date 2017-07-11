@@ -1,6 +1,6 @@
 'use strict'
 const parseToken = require('parse-bearer-token')
-const userTokenFacade = require('../../../../facades/user-token-facade/index')
+const userTokenFacade = require('../../../facades/user-token-facade/index')
 
 const Joi = require('joi')
 const Celebrate = require('celebrate')
@@ -20,7 +20,8 @@ const bodyIdSchema = {
 const bodyIdOrEmailSchema = {
   body:
   {
-    emailOrId: Joi.alternatives().try(bodyEmailSchema.body.email, bodyIdSchema.body.userId),
+    email: Joi.alternatives().try(bodyEmailSchema.body.email, bodyIdSchema.body.userId),
+    id: Joi.alternatives().try(bodyEmailSchema.body.email, bodyIdSchema.body.userId),
     claims: Joi.object()
   }
 }

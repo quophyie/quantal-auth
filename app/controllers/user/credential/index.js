@@ -2,7 +2,7 @@
  * Created by dman on 03/07/2017.
  */
 'use strict'
-const userTokenFacade = require('../../../../facades/user-token-facade/index')
+const userTokenFacade = require('../../../facades/user-token-facade/index')
 const Joi = require('joi')
 const Celebrate = require('celebrate')
 

@@ -29,6 +29,7 @@ module.exports = Object.freeze({
     return apiGatewayService
       .getUserApiCredential(email)
       .then(credentials => {
+        if (!claims) claims = {}
         claims.iss = credentials.data[0].key
         return authService.createToken(claims)
       })

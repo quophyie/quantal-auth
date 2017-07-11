@@ -31,9 +31,11 @@ describe('Api Gateway Service Tests', () => {
       .reply(200, userApiCredential)
       .delete(constants.JWT_CREDENTIAL_URL(userEmail))
       .reply(200, userApiCredential)
+
   })
 
   it('should throw NullReferenceException on create ApiGatewayService given null / empty apiGatewayEndpoint', () => {
+    process.env.API_GATEWAY_ENDPOINT = ''
     const thrown = () => { return new ApiGatewayService() }
     expect(thrown).to.throw(Errors.NullReferenceError, 'api gateway endpoint cannot be null or empty')
   })

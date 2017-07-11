@@ -43,7 +43,7 @@
     "morgan": "~1.7.0",
     "parse-bearer-token": "^0.0.1",
     "pg": "^6.4.0",
-    "quant-beat": "^0.0.10",
+    "quant-beat": "^0.0.12",
     "quantal-base-model": "0.0.6",
     "quantal-errors": "^0.0.12",
     "qute-bookshelf-repository": "^0.0.1",
