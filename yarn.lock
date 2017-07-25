@@ -50,6 +50,14 @@ ansi-styles@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/ansi-styles/-/ansi-styles-2.2.1.tgz#b432dd3358b634cf75e1e4664368240533c1ddbe"
 
+ansicolors@~0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/ansicolors/-/ansicolors-0.2.1.tgz#be089599097b74a5c9c4a84a0cdbcdb62bd87aef"
+
+ansistyles@~0.1.1:
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/ansistyles/-/ansistyles-0.1.3.tgz#5de60415bda071bb37127854c864f41b23254539"
+
 ap@~0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/ap/-/ap-0.2.0.tgz#ae0942600b29912f0d2b14ec60c45e8f330b6110"
@@ -83,6 +91,10 @@ array-union@^1.0.1:
   resolved "https://registry.yarnpkg.com/array-union/-/array-union-1.0.2.tgz#9a34410e4f4e3da23dea375be5be70f24778ec39"
   dependencies:
     array-uniq "^1.0.1"
+
+array-uniq@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/array-uniq/-/array-uniq-1.0.2.tgz#5fcc373920775723cfd64d65c64bef53bf9eba6d"
 
 array-uniq@^1.0.1:
   version "1.0.3"
@@ -265,6 +277,14 @@ buffer-writer@1.0.1:
 builtin-modules@^1.0.0, builtin-modules@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/builtin-modules/-/builtin-modules-1.1.1.tgz#270f076c5a72c02f5b65a47df94c5fe3a278892f"
+
+bunyan-format@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/bunyan-format/-/bunyan-format-0.2.1.tgz#a4b3b0d80070a865279417269e3f00ff02fbcb47"
+  dependencies:
+    ansicolors "~0.2.1"
+    ansistyles "~0.1.1"
+    xtend "~2.1.1"
 
 bunyan@^1.3.5, bunyan@^1.8.10:
   version "1.8.10"
@@ -1909,6 +1929,10 @@ object-keys@^1.0.10, object-keys@^1.0.8:
   version "1.0.11"
   resolved "https://registry.yarnpkg.com/object-keys/-/object-keys-1.0.11.tgz#c54601778ad560f1142ce0e01bcca8b56d13426d"
 
+object-keys@~0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/object-keys/-/object-keys-0.4.0.tgz#28a6aae7428dd2c3a92f3d95f21335dd204e0336"
+
 object.assign@^4.0.4:
   version "4.0.4"
   resolved "https://registry.yarnpkg.com/object.assign/-/object.assign-4.0.4.tgz#b1c9cc044ef1b9fe63606fc141abbb32e14730cc"
@@ -2179,14 +2203,15 @@ qs@6.4.0, qs@^6.0.2, qs@^6.1.0:
   version "6.4.0"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.4.0.tgz#13e26d28ad6b0ffaa91312cd3bf708ed351e7233"
 
-quant-beat@^0.0.12:
-  version "0.0.12"
-  resolved "https://registry.yarnpkg.com/quant-beat/-/quant-beat-0.0.12.tgz#cf3fd0a1bb62cce8853dfac3ab8efe4a8f737c0e"
+quant-beat@^0.0.14:
+  version "0.0.14"
+  resolved "https://registry.yarnpkg.com/quant-beat/-/quant-beat-0.0.14.tgz#2b47bcc178b30a673e0de4d6dd0931c6f5f18443"
   dependencies:
     app-root-path "^2.0.1"
     bluebird "^3.5.0"
     body-parser "~1.17.1"
     bunyan "^1.8.10"
+    bunyan-format "^0.2.1"
     cls-bluebird "^2.0.1"
     continuation-local-storage "^3.2.0"
     cookie-parser "~1.4.3"
@@ -2197,6 +2222,7 @@ quant-beat@^0.0.12:
     lodash "^4.17.4"
     lugg "^1.1.3"
     quantal-errors "0.0.12"
+    randomstring "^1.1.5"
     serve-favicon "~2.4.2"
     uuid "^3.1.0"
 
@@ -2262,6 +2288,12 @@ randomatic@^1.1.3:
   dependencies:
     is-number "^3.0.0"
     kind-of "^4.0.0"
+
+randomstring@^1.1.5:
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/randomstring/-/randomstring-1.1.5.tgz#6df0628f75cbd5932930d9fe3ab4e956a18518c3"
+  dependencies:
+    array-uniq "1.0.2"
 
 range-parser@~1.2.0:
   version "1.2.0"
@@ -2820,3 +2852,9 @@ write@^0.2.1:
 xtend@^4.0.0, xtend@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/xtend/-/xtend-4.0.1.tgz#a5c6d532be656e23db820efb943a1f04998d63af"
+
+xtend@~2.1.1:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/xtend/-/xtend-2.1.2.tgz#6efecc2a4dad8e6962c4901b337ce7ba87b5d28b"
+  dependencies:
+    object-keys "~0.4.0"
