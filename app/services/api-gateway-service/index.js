@@ -9,6 +9,8 @@ const axios = require('axios')
 const logger = require('../../logger/index').logger
 const constants = require('../../constants/index')
 
+const Wove = require('aspect.js').Wove
+@Wove({ bar: 42 })
 class ApiGatewayService {
   constructor (options) {
     this._apiGatewayEndpoint = options ? options.apiGatewayEndpoint : process.env.API_GATEWAY_ENDPOINT || null

@@ -8,6 +8,7 @@
   "scripts": {
     "start": "npm run migrations && node index",
     "migrations": "node_modules/knex/bin/cli.js migrate:latest",
+    "standard": "node_modules/standard/bin/cmd.js",
     "test": "NODE_ENV=test node_modules/mocha/bin/mocha test/**/*tests.js  "
   },
   "keywords": [
@@ -16,6 +17,9 @@
     "jsonwebtoken",
     "jwt-express"
   ],
+  "standard": {
+    "parser": "babel-eslint"
+  },
   "description": "A module that provides authentication using jwt ",
   "author": "quophyid@yahoo.com",
   "license": "MIT",
@@ -57,6 +61,7 @@
     "babel": "^6.23.0",
     "babel-cli": "^6.24.1",
     "babel-core": "6.11.4",
+    "babel-eslint": "^8.0.0",
     "babel-loader": "^7.1.1",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-decorators": "^6.24.1",

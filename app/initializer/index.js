@@ -12,7 +12,9 @@ const cookieParser = require('cookie-parser')
 const cors = require('cors')
 const app = express()
 const router = express.Router()
-//const enrouten = require('express-enrouten')
+
+const aspects = require('./../aspects/LoggerAspects')
+const enrouten = require('express-enrouten')
 
 const logger = require('../logger').logger
 const loggerExpress = require('../logger').loggerExpress
@@ -21,7 +23,6 @@ const AppErrors = require('../exceptions')
 const errorMappings = {
   unauthorized: ['TokenVerificationError', 'TokenExpiredError']
 }
-
 const routes = require ('../routes')
 
 class Initializer {
@@ -36,8 +37,8 @@ class Initializer {
     this.app.use(bodyParser.json())
     this.app.use(bodyParser.urlencoded({ extended: false }))
     this.app.use(cookieParser())
-    //this.app.use(enrouten({ directory: './' }))
-    routes(router)
+    this.app.use(enrouten({ directory: './../controllers/' }))
+    //routes(router)
     this.app.listen(this.port, () => logger.getMdc().run(() => logger.info(`Listening on port ${this.port}`)))
     /**
      * For example
