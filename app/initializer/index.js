@@ -11,7 +11,8 @@ const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const cors = require('cors')
 const app = express()
-const enrouten = require('express-enrouten')
+const router = express.Router()
+//const enrouten = require('express-enrouten')
 
 const logger = require('../logger').logger
 const loggerExpress = require('../logger').loggerExpress
@@ -21,6 +22,8 @@ const errorMappings = {
   unauthorized: ['TokenVerificationError', 'TokenExpiredError']
 }
 
+const routes = require ('../routes')
+
 class Initializer {
   /**
    * Initializes and starts the microservice
@@ -28,12 +31,13 @@ class Initializer {
   constructor () {
     this.port = Number(process.env.PORT) ? process.env.PORT : 3000
     this.app = app
-    this.app.use(loggerExpress(logger))
+    this.app.use(loggerExpress(logger, { setSpringCloudSleuthHeaders: true }))
     this.app.use(cors())
     this.app.use(bodyParser.json())
     this.app.use(bodyParser.urlencoded({ extended: false }))
     this.app.use(cookieParser())
-    this.app.use(enrouten({ directory: './../controllers' }))
+    //this.app.use(enrouten({ directory: './' }))
+    routes(router)
     this.app.listen(this.port, () => logger.getMdc().run(() => logger.info(`Listening on port ${this.port}`)))
     /**
      * For example
