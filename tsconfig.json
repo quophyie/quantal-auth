@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "outDir": "./tsout",
+    "allowJs": true,
+    "target": "es6",
+    "experimentalDecorators": true
+  },
+  "include": [
+    "./app/**/*",
+    "./index.js",
+    "./knexfile.js",
+    "./package.json"
+  ]
+}
