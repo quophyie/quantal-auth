@@ -3,13 +3,11 @@
  */
 'use strict'
 const _logger = require('../../logger/index').logger
-const logObj = require('../../logger/index').lobObject
 const jwt = require('jsonwebtoken')
 const authErrors = require('../../exceptions')
 const Errors = require('quantal-errors')
 const uuid4 = require('uuid/v4')
 const moment = require('moment')
-
 class Auth {
   /**
    *
@@ -47,7 +45,7 @@ class Auth {
           this.logger.error(payloadErr)
           return reject(payloadErr)
         }
-        this.logger.info(logObj,'token created successfully ...')
+        this.logger.info('token created successfully ...')
         return resolve({token})
       })
     })

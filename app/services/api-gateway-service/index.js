@@ -8,9 +8,10 @@ const hoek = require('hoek')
 const axios = require('axios')
 const logger = require('../../logger/index').logger
 const constants = require('../../constants/index')
+const Wove = require('aspect.js').Wove()
+const Events = require('../../events')
 
-const Wove = require('aspect.js').Wove
-@Wove({ bar: 42 })
+@Wove
 class ApiGatewayService {
   constructor (options) {
     this._apiGatewayEndpoint = options ? options.apiGatewayEndpoint : process.env.API_GATEWAY_ENDPOINT || null
@@ -19,7 +20,7 @@ class ApiGatewayService {
   }
 
   createApiCredential (userId) {
-    logger.info({userid: userId}, 'creating api credentials for user %s', userId)
+    logger.info({}, 'creating api credentials for user %s', userId)
 
     if (!userId) {
       const err = new Errors.NullReferenceError('user id / email cannot be null or empty')
@@ -30,7 +31,7 @@ class ApiGatewayService {
     const endponint = `${this._apiGatewayEndpoint}${constants.JWT_CREDENTIAL_URL(userId)}`
     return axios.post(endponint, {}, {headers: {'content-type': 'application/json'}})
       .then((response) => {
-        logger.info(response.data, 'credentials created successfully for user identified by %s', userId)
+        logger.info({data: response.data}, 'credentials created successfully for user identified by %s', userId)
         return response.data
       })
       .catch(function (error) {
@@ -40,7 +41,7 @@ class ApiGatewayService {
   }
 
   getUserApiCredential (userId) {
-    logger.info({userid: userId}, 'requesting api credentials for user %s from api gateway', userId)
+    logger.info({event: Events.CREDENTIALS_RECEIVED}, 'requesting api credentials for user %s from api gateway', userId)
 
     if (!userId) {
       const err = new Errors.NullReferenceError('user id / email cannot be null or empty')
@@ -51,7 +52,7 @@ class ApiGatewayService {
     const endponint = `${this._apiGatewayEndpoint}${constants.JWT_CREDENTIAL_URL(userId)}`
     return axios.get(endponint, null, {headers: {'content-type': 'application/json'}})
       .then((response) => {
-        logger.info(response.data, 'credentials retrieved successfully for user identified by %s', userId)
+        logger.info({data: response.data, event: Events.CREDENTIALS_REQUEST}, 'credentials retrieved successfully for user identified by %s', userId)
         return response.data
       })
       .catch(function (error) {
