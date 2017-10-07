@@ -8,6 +8,8 @@ const authErrors = require('../../exceptions')
 const Errors = require('quantal-errors')
 const uuid4 = require('uuid/v4')
 const moment = require('moment')
+const Events = require('../../events')
+
 class Auth {
   /**
    *
@@ -34,10 +36,10 @@ class Auth {
    */
   createToken (claims) {
     return new Promise((resolve, reject) => {
-      this.logger.info('creating token ...')
+      this.logger.info({event: Events.TOKEN_CREATE}, 'creating token ...')
       claims.jti = uuid4()
       // Convert expiry and not before to seconds
-      claims.exp = claims.exp ? claims.exp : moment().add(moment.duration(2, 'seconds')).toDate().getTime() / 1000
+      claims.exp = claims.exp ? claims.exp : moment().add(moment.duration(2, 'hours')).toDate().getTime() / 1000
       claims.nbf = claims.nbf ? claims.nbf : moment().toDate().getTime() / 1000
       jwt.sign(claims, this._jwtSecret, (err, token) => {
         if (err) {
@@ -45,7 +47,7 @@ class Auth {
           this.logger.error(payloadErr)
           return reject(payloadErr)
         }
-        this.logger.info('token created successfully ...')
+        this.logger.info({event: Events.TOKEN_CREATE}, 'token created successfully ...')
         return resolve({token})
       })
     })
@@ -57,6 +59,7 @@ class Auth {
    * @returns {Promise}
    */
   verify (token) {
+    this.logger.info({event: Events.TOKEN_VERIFY}, 'verifying token')
     if (!token) {
       const err = new Errors.NullReferenceError('token is null. token cannot be null or empty')
       this.logger.error(err)
@@ -68,7 +71,7 @@ class Auth {
           this.logger.error(err)
           return reject(err)
         }
-        this.logger.info('token verified successfully')
+        this.logger.info({event: Events.TOKEN_VERIFY}, 'token verified successfully')
         return resolve(decoded)
       })
     })

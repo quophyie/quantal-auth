@@ -20,7 +20,7 @@ class ApiGatewayService {
   }
 
   createApiCredential (userId) {
-    logger.info({}, 'creating api credentials for user %s', userId)
+    logger.info({event: Events.CREDENTIALS_CREATE}, 'creating api credentials for user %s', userId)
 
     if (!userId) {
       const err = new Errors.NullReferenceError('user id / email cannot be null or empty')
@@ -31,7 +31,7 @@ class ApiGatewayService {
     const endponint = `${this._apiGatewayEndpoint}${constants.JWT_CREDENTIAL_URL(userId)}`
     return axios.post(endponint, {}, {headers: {'content-type': 'application/json'}})
       .then((response) => {
-        logger.info({data: response.data}, 'credentials created successfully for user identified by %s', userId)
+        logger.info({event: Events.CREDENTIALS_CREATE, data: response.data}, 'credentials created successfully for user identified by %s', userId)
         return response.data
       })
       .catch(function (error) {
@@ -67,7 +67,7 @@ class ApiGatewayService {
    * @returns {*}
    */
   deleteUserApiCredential (userId) {
-    logger.info({userid: userId}, 'deleting api credentials for user %s from api gateway', userId)
+    logger.info({event: Events.CREDENTIALS_DELETE}, 'deleting api credentials for user %s from api gateway', userId)
 
     if (!userId) {
       const err = new Errors.NullReferenceError('user id / email cannot be null or empty')
@@ -78,7 +78,7 @@ class ApiGatewayService {
     const endponint = `${this._apiGatewayEndpoint}${constants.CONSUMERS_URL}/${userId}`
     return axios.delete(endponint, null, {headers: {'content-type': 'application/json'}})
             .then((response) => {
-              logger.info({data: response.data}, 'credentials deleted successfully for user identified by %s', userId)
+              logger.info({event: Events.CREDENTIALS_DELETE, data: response.data}, 'credentials deleted successfully for user identified by %s', userId)
               return response.data
             })
             .catch(function (error) {
