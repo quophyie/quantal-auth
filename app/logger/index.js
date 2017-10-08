@@ -4,9 +4,13 @@
 'use strict'
 const Logger = require('quant-beat').logger
 const loggerExpress = require('quant-beat').loggerExpress
+const err = require('quantal-nodejs-shared').serializers.err
+const opts = {
+  serializers: { err }
+}
 
 module.exports = {
 
-  logger: new Logger(),
+  logger: new Logger(opts),
   loggerExpress
 }

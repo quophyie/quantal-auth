@@ -16,9 +16,9 @@ const enrouten = require('express-enrouten')
 const logger = require('../logger').logger
 const loggerExpress = require('../logger').loggerExpress
 
-const LoggerAspect = require('quantal-nodejs-shared').aspects.LoggerAspect
-new LoggerAspect(logger, true, true)
 const Events = require('../events')
+const LoggerAspect = require('quantal-nodejs-shared').aspects.LoggerAspect
+new LoggerAspect(logger, Events, true, true)
 const AppAspect = require('../aspects').AppAspect
 new AppAspect()
 
