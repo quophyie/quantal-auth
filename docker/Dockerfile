@@ -4,11 +4,16 @@ FROM node:8.1.2
 RUN mkdir -p /opt/app/app
 RUN mkdir -p /opt/app/test
 RUN mkdir -p /opt/app/migrations
-ADD app/ /opt/app/app
-ADD test/ /opt/app/test/
-ADD migrations/ /opt/app/migrations/
-ADD index.js /opt/app
-ADD knexfile.js /opt/app
+#ADD app/ /opt/app/app
+#ADD test/ /opt/app/test/
+#ADD migrations/ /opt/app/migrations/
+#ADD index.js /opt/app
+#ADD knexfile.js /opt/app
+ADD dist/app/ /opt/app/app
+ADD dist/test/ /opt/app/test/
+ADD dist/migrations/ /opt/app/migrations/
+ADD dist/index.js /opt/app
+ADD dist/knexfile.js /opt/app
 ADD package.json /opt/app
 ADD package-lock.json /opt/app
 ADD README.md /opt/app

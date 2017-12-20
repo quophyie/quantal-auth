@@ -47,7 +47,7 @@
     "morgan": "~1.7.0",
     "parse-bearer-token": "^0.0.1",
     "pg": "^6.4.2",
-    "quant-beat": "0.0.17",
+    "quant-beat": "0.0.18",
     "quantal-base-model": "0.0.6",
     "quantal-errors": "^0.0.12",
     "quantal-nodejs-shared": "0.0.38",

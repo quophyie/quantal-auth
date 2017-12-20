@@ -6,7 +6,10 @@ const Logger = require('quant-beat').logger
 const loggerExpress = require('quant-beat').loggerExpress
 const err = require('quantal-nodejs-shared').serializers.err
 const opts = {
-  serializers: { err }
+  serializers: { err },
+  logzioOpts: {
+    token: process.env.LOGZIO_TOKEN
+  }
 }
 
 module.exports = {
