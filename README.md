@@ -32,7 +32,7 @@ for example
  
  - **`DB_HOST`** - The database host ip or name  e.g. **`localhost`**
  
- - **`LOGZIO_TOKEN`** - The Logz.io token to send logs to logz.io
+ - **`LOGZIO_TOKEN`** - The [Logz.io](http://logz.io) token to use to send logs to [Logz.io](http://logz.io)
  
  - **`API_GATEWAY_ENDPOINT`** - The endpoint for the API Gateway e.g. [http://localhost:8001](http://localhost:8001)
 
