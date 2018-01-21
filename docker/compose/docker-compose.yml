@@ -10,7 +10,7 @@ services:
       context: ./../../
       dockerfile: ./docker/Dockerfile
     ports:
-      - "3000:3000"
+      - "9000:3000"
     environment:
       - DB_HOST=quantal_auth_db
       - DB_PORT=5432
@@ -20,6 +20,7 @@ services:
       - JWT_TYPE=${JWT_TYPE}
       - JWT_ALGORITHM=${JWT_ALGORITHM}
       - API_GATEWAY_ENDPOINT=${API_GATEWAY_ENDPOINT}
+      - LOGZIO_TOKEN=${LOGZIO_TOKEN}
     links:
       - quantal_auth_db
     depends_on:
