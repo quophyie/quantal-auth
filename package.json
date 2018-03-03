@@ -9,7 +9,7 @@
     "start": "npm run migrations && node index",
     "migrations": "node_modules/knex/bin/cli.js migrate:latest",
     "standard": "node_modules/standard/bin/cmd.js",
-    "test": "NODE_ENV=test node_modules/mocha/bin/mocha test/**/*tests.js  "
+    "test": "NODE_ENV=test node_modules/mocha/bin/mocha dist/test/**/*tests.js  "
   },
   "keywords": [
     "authentication",
@@ -49,7 +49,7 @@
     "pg": "^6.4.2",
     "quant-beat": "0.0.18",
     "quantal-base-model": "0.0.6",
-    "quantal-errors": "^0.0.12",
+    "quantal-errors": "0.0.13",
     "quantal-nodejs-shared": "0.0.38",
     "qute-bookshelf-repository": "^0.0.1",
     "standard": "^10.0.2",
