@@ -36,7 +36,7 @@ class Auth {
    */
   createToken (claims) {
     return new Promise((resolve, reject) => {
-      this.logger.info({event: Events.TOKEN_CREATE}, 'creating token ...')
+      this.logger.info({subEvent: Events.TOKEN_CREATE}, 'creating token ...')
       claims.jti = uuid4()
       // Convert expiry and not before to seconds
       claims.exp = claims.exp ? claims.exp : moment().add(moment.duration(2, 'hours')).toDate().getTime() / 1000
@@ -44,10 +44,10 @@ class Auth {
       jwt.sign(claims, this._jwtSecret, (err, token) => {
         if (err) {
           const payloadErr = new authErrors.PayloadError(err)
-          this.logger.error(payloadErr)
+          this.logger.error({subEvent: Events.TOKEN_CREATE}, payloadErr)
           return reject(payloadErr)
         }
-        this.logger.info({event: Events.TOKEN_CREATE}, 'token created successfully ...')
+        this.logger.info({subEvent: Events.TOKEN_CREATE}, 'token created successfully ...')
         return resolve({token})
       })
     })
@@ -59,7 +59,7 @@ class Auth {
    * @returns {Promise}
    */
   verify (token) {
-    this.logger.info({event: Events.TOKEN_VERIFY}, 'verifying token')
+    this.logger.info({subEvent: Events.TOKEN_VERIFY}, 'verifying token')
     if (!token) {
       const err = new Errors.NullReferenceError('token is null. token cannot be null or empty')
       this.logger.error(err)
@@ -68,10 +68,10 @@ class Auth {
     return new Promise((resolve, reject) => {
       jwt.verify(token, this._jwtSecret, (err, decoded) => {
         if (err) {
-          this.logger.error(err)
+          this.logger.error({subEvent: Events.TOKEN_VERIFY}, err)
           return reject(err)
         }
-        this.logger.info({event: Events.TOKEN_VERIFY}, 'token verified successfully')
+        this.logger.info({subEvent: Events.TOKEN_VERIFY}, 'token verified successfully')
         return resolve(decoded)
       })
     })

@@ -18,7 +18,7 @@ const loggerExpress = require('../logger').loggerExpress
 
 const Events = require('../events')
 const LoggerAspect = require('quantal-nodejs-shared').aspects.LoggerAspect
-new LoggerAspect(logger, Events, true, true)
+new LoggerAspect(logger, Events)
 const AppAspect = require('../aspects').AppAspect
 new AppAspect()
 
@@ -45,7 +45,7 @@ class Initializer {
     this.app.use(loggerExpress(logger, { setSpringCloudSleuthHeaders: true }))
     this.app.use(enrouten({ directory: './../controllers/' }))
 
-    this.app.listen(this.port, () => logger.getMdc().run(() => logger.info(Events.SERVICE_START, `Listening on port %s`, this.port)))
+    this.app.listen(this.port, () => logger.getMdc().run(() => logger.info({event: Events.SERVICE_START, traceId: Date.now()}, `Listening on port %s`, this.port)))
     /**
      * For example
      *

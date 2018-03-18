@@ -3,18 +3,20 @@
  */
 'use strict'
 const moment = require('moment')
+const _logger = require('../../logger/index').logger
 
 const BaseRepository = require('qute-bookshelf-repository')
 const UserToken = require('../../models/user-token')
 const UserTokenRepository = require('../../repositories/user-token-repository')
 const CommonErrors = require('quantal-errors')
 const AppErrors = require('../../exceptions')
+const Events = require('../../events')
 
 class UserTokenService {
   constructor (userTokenRepo) {
     if (!(userTokenRepo instanceof UserTokenRepository)) { throw new CommonErrors.IllegalArgumentError('repository must be instanceof UserTokenRepository') }
-
     this.userTokenRepo = userTokenRepo
+    this.logger = _logger
   }
 
   createToken (claims) {
@@ -23,13 +25,16 @@ class UserTokenService {
   }
 
   checkValidity (jti) {
+    this.logger.info({subEvent: Events.TOKEN_VALIDATE}, 'validating token ...')
     return this.findByJti(jti)
      .then(token => {
        if (token) {
          const isExpired = moment(token.expiryDate).isBefore(moment())
          if (isExpired) {
+           this.logger.info({subEvent: Events.TOKEN_VALIDATE}, 'token failed validation')
            throw new AppErrors.TokenVerificationError('token verification failed')
          }
+         this.logger.info({subEvent: Events.TOKEN_VALIDATE}, 'token successfully validated')
          return isExpired
        }
      })

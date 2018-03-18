@@ -20,43 +20,43 @@ class ApiGatewayService {
   }
 
   createApiCredential (userId) {
-    logger.info({event: Events.CREDENTIALS_CREATE}, 'creating api credentials for user %s', userId)
+    logger.info({subEvent: Events.CREDENTIALS_CREATE}, 'creating api credentials for user %s', userId)
 
     if (!userId) {
       const err = new Errors.NullReferenceError('user id / email cannot be null or empty')
-      logger.error(err)
+      logger.error({subEvent: Events.CREDENTIALS_CREATE}, err)
       return Promise.reject(err)
     }
 
     const endponint = `${this._apiGatewayEndpoint}${constants.JWT_CREDENTIAL_URL(userId)}`
     return axios.post(endponint, {}, {headers: {'content-type': 'application/json'}})
       .then((response) => {
-        logger.info({event: Events.CREDENTIALS_CREATE, data: response.data}, 'credentials created successfully for user identified by %s', userId)
+        logger.info({subEvent: Events.CREDENTIALS_CREATE, data: response.data}, 'credentials created successfully for user identified by %s', userId)
         return response.data
       })
       .catch(function (error) {
-        logger.error(error)
+        logger.error({subEvent: Events.CREDENTIALS_CREATE}, error)
         return Promise.reject(error)
       })
   }
 
   getUserApiCredential (userId) {
-    logger.info({event: Events.CREDENTIALS_RECEIVED}, 'requesting api credentials for user %s from api gateway', userId)
+    logger.info({subEvent: Events.CREDENTIALS_REQUEST}, 'requesting api credentials for user %s from api gateway', userId)
 
     if (!userId) {
       const err = new Errors.NullReferenceError('user id / email cannot be null or empty')
-      logger.error(err)
+      logger.error({subEvent: Events.CREDENTIALS_REQUEST}, err)
       return Promise.reject(err)
     }
 
     const endponint = `${this._apiGatewayEndpoint}${constants.JWT_CREDENTIAL_URL(userId)}`
     return axios.get(endponint, null, {headers: {'content-type': 'application/json'}})
       .then((response) => {
-        logger.info({data: response.data, event: Events.CREDENTIALS_REQUEST}, 'credentials retrieved successfully for user identified by %s', userId)
+        logger.info({data: response.data, subEvent: Events.CREDENTIALS_RECEIVED}, 'credentials retrieved successfully for user identified by %s', userId)
         return response.data
       })
       .catch(function (error) {
-        logger.error(error)
+        logger.error({subEvent: Events.CREDENTIALS_REQUEST}, error)
         return Promise.reject(error)
       })
   }
@@ -67,22 +67,22 @@ class ApiGatewayService {
    * @returns {*}
    */
   deleteUserApiCredential (userId) {
-    logger.info({event: Events.CREDENTIALS_DELETE}, 'deleting api credentials for user %s from api gateway', userId)
+    logger.info({subEvent: Events.CREDENTIALS_DELETE}, 'deleting api credentials for user %s from api gateway', userId)
 
     if (!userId) {
       const err = new Errors.NullReferenceError('user id / email cannot be null or empty')
-      logger.error(err)
+      logger.error({subEvent: Events.CREDENTIALS_DELETE}, err)
       return Promise.reject(err)
     }
 
     const endponint = `${this._apiGatewayEndpoint}${constants.CONSUMERS_URL}/${userId}`
     return axios.delete(endponint, null, {headers: {'content-type': 'application/json'}})
             .then((response) => {
-              logger.info({event: Events.CREDENTIALS_DELETE, data: response.data}, 'credentials deleted successfully for user identified by %s', userId)
+              logger.info({subEvent: Events.CREDENTIALS_DELETE, data: response.data}, 'credentials deleted successfully for user identified by %s', userId)
               return response.data
             })
             .catch(function (error) {
-              logger.error(error)
+              logger.error({subEvent: Events.CREDENTIALS_DELETE}, error)
               return Promise.reject(error)
             })
   }
