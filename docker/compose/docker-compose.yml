@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 networks:
   default:
     external:
@@ -10,7 +10,7 @@ services:
       context: ./../../
       dockerfile: ./docker/Dockerfile
     ports:
-      - "9000:3000"
+      - ${WEB_APP_PORT:-9000}:3000
     environment:
       - DB_HOST=quantal_auth_db
       - DB_PORT=5432
@@ -21,6 +21,7 @@ services:
       - JWT_ALGORITHM=${JWT_ALGORITHM}
       - API_GATEWAY_ENDPOINT=${API_GATEWAY_ENDPOINT}
       - LOGZIO_TOKEN=${LOGZIO_TOKEN}
+      - NODE_ENV
     links:
       - quantal_auth_db
     depends_on:
@@ -29,15 +30,12 @@ services:
     volumes:
       - /private/var/docker/log/quantal_auth:/var/log
 
-    #networks:
-     # - container_services_networks
-
   # The postgres database
   quantal_auth_db:
     restart: always
     image: sameersbn/postgresql:9.6-2
     ports:
-      - "5436:5432"
+      - ${DB_PORT_EXPOSED_ON_HOST:-5436}:5432
     environment:
       - DEBUG=false
       - DB_USER=postgres
