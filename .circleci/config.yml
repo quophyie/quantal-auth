@@ -5,35 +5,38 @@ jobs:
     working_directory: ~/quantal-auth
 
     docker:
-      - mage: webpackcontrib/circleci-node8
+      - image: webpackcontrib/circleci-node8
 
     steps:
 
       - checkout
 
       - restore_cache:
-          key: quantal-auth-{{ checksum "pom.xml" }}
+          key:
+            - quantal-auth-v1-dependencies-{{ checksum "package.json" }}
+               # fallback to using the latest cache if no exact match is found
+            - quantal-auth-v1-
 
-      - run: mvn dependency:go-offline
+      - run: npm install
 
-      - run: mkdir -p /var/log
-      - run: sudo touch /var/log/springboot_log.log /var/log/app_log.log /var/log/app_log.json && sudo chmod 777 /var/log/springboot_log.log /var/log/app_log.log /var/log/app_log.json
+      - run: mkdir -p test_report
+      - run: mkdir -p build
 
       - save_cache:
           paths:
-            - ~/.m2
-          key: base_pom-{{ checksum "pom.xml" }}
+            - node_modules
+          key: quantal-auth-v1-dependencies-{{ checksum "package.json" }}
 
-      - run: mvn package
+      - run: npm run test
 
       - run: mvn deploy -Pgpg -s settings.xml
 
 
       - store_test_results:
-          path: target/surefire-reports
+          path: test_report
 
       - store_artifacts:
-          path: target/base-pom-0.0.1-SNAPSHOT.jar
+          path: build
 workflows:
   version: 2
   build_test_and_deploy_project:
