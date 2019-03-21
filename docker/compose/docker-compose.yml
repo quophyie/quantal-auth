@@ -26,7 +26,7 @@ services:
       - quantal_auth_db
     depends_on:
       - quantal_auth_db
-    command: ["/wait-for-it.sh", "quantal_auth_db:5432", "--","npm","--prefix", "/opt/app/", "start"]
+    command: ["/wait-for-it.sh", "-t", "30", "quantal_auth_db:5432", "--","npm","--prefix", "/opt/app/", "start"]
     volumes:
       - /private/var/docker/log/quantal_auth:/var/log
 
