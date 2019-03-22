@@ -9,8 +9,9 @@
     "start": "npm run migrations && npm run seed && node dist/index",
     "seed": "node_modules/knex/bin/cli.js seed:run",
     "migrations": "node_modules/knex/bin/cli.js migrate:latest",
-    "test": "npm run build && NODE_ENV=development node_modules/mocha/bin/mocha dist/test/**/*tests.js  ",
+    "test": "npm run build_tests && NODE_ENV=development node_modules/mocha/bin/mocha dist/test/**/*tests.js  ",
     "build": "node node_modules/babel-cli/bin/babel app --out-dir dist",
+    "build_tests": "node node_modules/babel-cli/bin/babel test --out-dir dist/test",
     "prepublish": "npm run build"
   },
   "keywords": [
