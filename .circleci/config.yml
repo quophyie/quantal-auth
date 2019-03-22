@@ -30,7 +30,7 @@ jobs:
       - run:
         command: npm run test
         environment:
-          - LOGZIO_TOKEN: ${LOGZIO_TOKEN}
+          LOGZIO_TOKEN: ${LOGZIO_TOKEN}
 
 
       - store_test_results:
