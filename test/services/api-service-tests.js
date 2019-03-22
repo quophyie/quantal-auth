@@ -31,6 +31,8 @@ describe('Api Gateway Service Tests', () => {
       .reply(200, userApiCredential)
       .delete(constants.JWT_CREDENTIAL_URL(userEmail))
       .reply(200, userApiCredential)
+      .delete(`${constants.CONSUMERS_URL}/${userEmail}`)
+      .reply(200, userApiCredential)
 
   })
 

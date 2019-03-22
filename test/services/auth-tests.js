@@ -15,12 +15,12 @@ describe('Auth Tests', () => {
   })
 
   it('should throw PayloadError Error given null claims', () => {
-    return auth.createCredential({name: 'auth'})
-      .then(token => expect(token).to.be.a.string())
+    return auth.createToken({name: 'auth'})
+      .then(token => expect(token.token).to.be.a.string())
   })
 
   it('should create JWT', () => {
-    return auth.createCredential()
+    return auth.createToken()
       .catch(err => expect(err).to.be.instanceof(authErrors.PayloadError))
   })
 
