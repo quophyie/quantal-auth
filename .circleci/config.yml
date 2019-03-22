@@ -31,6 +31,7 @@ jobs:
           command: npm run test
           environment:
             LOGZIO_TOKEN: ${LOGZIO_TOKEN}
+            JWT_SECRET: jwtsecret123
 
 
       - store_test_results:
