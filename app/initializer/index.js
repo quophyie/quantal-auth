@@ -1,7 +1,7 @@
 'use strict'
 /**
-const sharedGlobals = require('./lib/shared-globals')
-if (process.env.NODE_ENV !== 'test') {
+ const sharedGlobals = require('./lib/shared-globals')
+ if (process.env.NODE_ENV !== 'test') {
   sharedGlobals.DB = Object.freeze(require('./../schemas/index')({
     DATABASE_URL: process.env.DATABASE_URL
   }))
@@ -18,7 +18,7 @@ const loggerExpress = require('../logger').loggerExpress
 
 const Events = require('../events')
 const LoggerAspect = require('quantal-nodejs-shared').aspects.LoggerAspect
-new LoggerAspect(logger, Events)
+const loggerAspectInstance = new LoggerAspect(logger, Events)
 const AppAspect = require('../aspects').AppAspect
 new AppAspect()
 
@@ -36,7 +36,6 @@ class Initializer {
   constructor () {
     this.port = Number(process.env.PORT) ? process.env.PORT : 3000
     this.app = app
-
     this.app.use(cors())
     this.app.use(bodyParser.json())
     this.app.use(bodyParser.urlencoded({ extended: false }))
@@ -56,8 +55,7 @@ class Initializer {
      *   badRequest: ['MyCustomError']
      * }
      */
-    this.app.use(errorMiddleware(AppErrors, errorMappings))
-    // app.use(require('./error-middleware')(logger))
+    this.app.use(errorMiddleware(AppErrors, errorMappings, logger))
   }
 
   getApp () {
@@ -70,6 +68,10 @@ class Initializer {
 
   getRouter () {
     return this.router
+  }
+
+  static getLoggerAspect () {
+    return loggerAspectInstance
   }
 }
 
