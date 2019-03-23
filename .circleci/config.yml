@@ -31,10 +31,10 @@ jobs:
         command: npm run build
 
       - run:
-          command: npm run test
-          environment:
-            LOGZIO_TOKEN: logzio_token
-            JWT_SECRET: jwtsecret123
+        command: npm run test
+        environment:
+          LOGZIO_TOKEN: logzio_token
+          JWT_SECRET: jwtsecret123
 
 
       - store_test_results:
