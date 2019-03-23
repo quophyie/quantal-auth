@@ -6,7 +6,7 @@
     "node": ">=6.0.0 "
   },
   "scripts": {
-    "start": "npm run migrations && npm run seed && node dist/index",
+    "start": "npm run migrations && node dist/index",
     "seed": "node_modules/knex/bin/cli.js seed:run",
     "migrations": "node_modules/knex/bin/cli.js migrate:latest",
     "test": "npm run build && NODE_ENV=development node_modules/mocha/bin/mocha dist/test/**/*tests.js  ",
