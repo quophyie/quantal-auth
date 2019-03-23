@@ -26,9 +26,9 @@ jobs:
           paths:
             - node_modules
           key: quantal-auth-v1-dependencies-{{ checksum "package.json" }}
-
       - run:
-          command: npm run build
+        command: npm run build
+      - run:
           command: npm run test
           environment:
             LOGZIO_TOKEN: logzio_token
