@@ -28,6 +28,7 @@ jobs:
           key: quantal-auth-v1-dependencies-{{ checksum "package.json" }}
       - run:
         command: npm run build
+
       - run:
           command: npm run test
           environment:
