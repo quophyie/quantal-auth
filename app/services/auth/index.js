@@ -17,7 +17,7 @@ class Auth {
    * @param {Logger} options.logger - the logger used for logging
    */
   constructor (options) {
-    this._jwtSecret = process.env.JWT_SECRET || 'secret'
+    this._jwtSecret = process.env.JWT_SECRET
     this.logger = (options && options.logger) || _logger
   }
 
@@ -32,9 +32,11 @@ class Auth {
   /**
    * Creates a token
    * @param {object} claims - The jwt claims
+   * @param {string} secret - The secret used to sign the jwt. if not provided,
+   *                          process.env.JWT_SECRET will be used.
    * @returns {Promise}
    */
-  createToken (claims) {
+  createToken (claims, secret) {
     return new Promise((resolve, reject) => {
       this.logger.info({subEvent: Events.TOKEN_CREATE}, 'creating token ...')
       if (!claims) {
@@ -46,7 +48,8 @@ class Auth {
       // Convert expiry and not before to seconds
       claims.exp = claims.exp ? claims.exp : moment().add(moment.duration(2, 'hours')).toDate().getTime() / 1000
       claims.nbf = claims.nbf ? claims.nbf : moment().toDate().getTime() / 1000
-      jwt.sign(claims, this._jwtSecret, (err, token) => {
+      const signatureSecret = secret || this._jwtSecret
+      jwt.sign(claims, signatureSecret, (err, token) => {
         if (err) {
           const payloadErr = new authErrors.PayloadError(err)
           this.logger.error({subEvent: Events.TOKEN_CREATE}, payloadErr)

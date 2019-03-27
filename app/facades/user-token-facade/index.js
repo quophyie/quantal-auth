@@ -24,16 +24,18 @@ module.exports = Object.freeze({
           .then(credentials => credentials)
   },
 
-  createToken (email, claims) {
+  createToken (email, claims, saveTokenInDb = false) {
     let token = null
-    return apiGatewayService
+    let tokenPromise = apiGatewayService
       .getUserApiCredential(email)
       .then(credentials => {
         if (!claims) claims = {}
         claims.iss = credentials.data[0].key
-        return authService.createToken(claims)
+        const secret = credentials.data[0].secret
+        return authService.createToken(claims, secret)
       })
-      .then(_token => {
+    if (saveTokenInDb === true) {
+      return tokenPromise.then(_token => {
         token = _token
         const usertoken = {
           jti: claims.jti,
@@ -43,7 +45,10 @@ module.exports = Object.freeze({
         }
         return userTokenService.createToken(usertoken)
       })
-      .then((userToken) => token)
+        .then((userToken) => token)
+    } else {
+      return tokenPromise
+    }
   },
 
   deleteUser (email) {
