@@ -11,10 +11,11 @@ const nock = require('nock')
 
 const apiGatewayEndpoint = 'http://localhost:8000'
 const userEmail = 'user@quantal.com'
+const jwtCredentialId = 'bcbfb45d-e391-42bf-c2ed-94e32946753a'
 const userApiCredential = {
   consumer_id: '7bce93e1-0a90-489c-c887-d385545f8f4b',
   created_at: 1442426001000,
-  id: 'bcbfb45d-e391-42bf-c2ed-94e32946753a',
+  id: jwtCredentialId,
   key: 'a36c3049b36249a3c9f8891cb127243c',
   secret: 'e71829c351aa4242c2719cbfbe671c09'
 }
@@ -29,9 +30,9 @@ describe('Api Gateway Service Tests', () => {
       .reply(200, userApiCredential)
       .get(constants.JWT_CREDENTIAL_URL(userEmail))
       .reply(200, userApiCredential)
-      .delete(constants.JWT_CREDENTIAL_URL(userEmail))
+      .delete(`${constants.JWT_CREDENTIAL_URL(userEmail)}/${jwtCredentialId}`)
       .reply(200, userApiCredential)
-      .delete(`${constants.CONSUMERS_URL}/${userEmail}`)
+      .delete(`${constants.JWT_CREDENTIAL_URL(userEmail)}/${jwtCredentialId}`)
       .reply(200, userApiCredential)
 
   })
@@ -66,7 +67,7 @@ describe('Api Gateway Service Tests', () => {
 
   it('should delete user credentials on api gateway credentials given user email / id ', () => {
     return apiService
-            .deleteUserApiCredential(userEmail)
+            .deleteUserApiCredential(userEmail, jwtCredentialId)
             .then(result => expect(result).to.be.equal(userApiCredential))
   })
 })

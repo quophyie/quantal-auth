@@ -64,9 +64,10 @@ class ApiGatewayService {
   /**
    * Deletes user api credential
    * @param userId
+   * @param jwtCredentialId - the jwt credential id
    * @returns {*}
    */
-  deleteUserApiCredential (userId) {
+  deleteUserApiCredential (userId, jwtCredentialId) {
     logger.info({subEvent: Events.CREDENTIALS_DELETE}, 'deleting api credentials for user %s from api gateway', userId)
 
     if (!userId) {
@@ -75,7 +76,7 @@ class ApiGatewayService {
       return Promise.reject(err)
     }
 
-    const endponint = `${this._apiGatewayEndpoint}${constants.CONSUMERS_URL}/${userId}`
+    const endponint = `${this._apiGatewayEndpoint}${constants.JWT_CREDENTIAL_URL(userId)}/${jwtCredentialId}`
     return axios.delete(endponint, null, {headers: {'content-type': 'application/json'}})
             .then((response) => {
               logger.info({subEvent: Events.CREDENTIALS_DELETE, data: response.data}, 'credentials deleted successfully for user identified by %s', userId)

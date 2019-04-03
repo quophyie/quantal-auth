@@ -1,5 +1,5 @@
 'use strict'
-const giphyFacade = require('./../../facades/giphy')
+const giphyFacade = require('./../../../facades/giphy')
 
 module.exports = (router) => {
   router.get('/:query', (req, res) => {

@@ -26,7 +26,8 @@ const errorMiddleware = require('quantal-errors').expressErrorMiddleware
 const mdcPopulatorMiddleware = require('quantal-nodejs-shared').middleware.MdcPopulator
 const AppErrors = require('../exceptions')
 const errorMappings = {
-  unauthorized: ['TokenVerificationError', 'TokenExpiredError']
+  unauthorized: ['TokenVerificationError', 'TokenExpiredError'],
+  badRequest: ['InvalidTokenError']
 }
 
 class Initializer {

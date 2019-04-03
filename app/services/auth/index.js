@@ -66,7 +66,7 @@ class Auth {
    * @param {string} token - The token to be decoded
    * @returns {Promise}
    */
-  verify (token) {
+  verify (token, secret) {
     this.logger.info({subEvent: Events.TOKEN_VERIFY}, 'verifying token')
     if (!token) {
       const err = new Errors.NullReferenceError('token is null. token cannot be null or empty')
@@ -74,7 +74,8 @@ class Auth {
       return Promise.reject(err)
     }
     return new Promise((resolve, reject) => {
-      jwt.verify(token, this._jwtSecret, (err, decoded) => {
+      const signatureSecret = secret || this._jwtSecret
+      jwt.verify(token, signatureSecret, (err, decoded) => {
         if (err) {
           this.logger.error({subEvent: Events.TOKEN_VERIFY}, err)
           return reject(err)

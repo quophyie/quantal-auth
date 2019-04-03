@@ -1,6 +1,6 @@
 'use strict'
 const parseToken = require('parse-bearer-token')
-const userTokenFacade = require('../../../facades/user-token-facade/index')
+const userTokenFacade = require('../../../../facades/user-token-facade/index')
 
 const Joi = require('joi')
 const Celebrate = require('celebrate')
@@ -53,7 +53,7 @@ const paramsJtiSchema = {
 }
 
 module.exports = (router) => {
-  router.post('/',
+  router.post('',
     Celebrate(bodyIdOrEmailSchema, { stripUnknown: true }),
     (req, res, next) => {
       const idOrEmail = req.body['emailOrId'] || req.body['email']
@@ -97,5 +97,35 @@ module.exports = (router) => {
       userTokenFacade.verifyToken(token)
       .then(decoded => res.json(decoded))
       .catch(next)
+    })
+
+  router.post('/blacklist/check',
+    (req, res, next) => {
+      userTokenFacade.tokenBlacklistCheck(req.body)
+          .then(result => res.json(result))
+          .catch(next)
+    })
+
+  /**
+   * Blacklists a single token
+   */
+  router.post('/blacklist/:email/one',
+    (req, res, next) => {
+      const email = req.params.email
+      const token = req.body.token
+      userTokenFacade.blacklistToken(email, token)
+        .then(result => res.json({'message': 'OK'}))
+        .catch(next)
+    })
+
+  /**
+   * Blacklists all tokens associated with user
+   */
+  router.post('/blacklist/:email/all',
+    (req, res, next) => {
+      const email = req.params.email
+      userTokenFacade.blacklistAllUserTokens(email)
+        .then(result => res.json({'message': 'OK'}))
+        .catch(next)
     })
 }
