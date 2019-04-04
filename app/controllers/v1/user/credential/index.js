@@ -46,7 +46,7 @@ module.exports = (router) => {
     Celebrate(emailSchema, {stripUnknown: true}),
     (req, res, next) => {
       const idOrEmail = req.params['email']
-      userTokenFacade.deleteUser(idOrEmail)
+      userTokenFacade.deleteUserApiCredential(idOrEmail)
       .then(result => res.json())
       .catch(next)
     })

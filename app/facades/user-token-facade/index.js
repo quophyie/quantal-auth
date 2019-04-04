@@ -71,10 +71,10 @@ module.exports = Object.freeze({
       })
   },
 
-  deleteUser (email) {
-    return apiGatewayService
-      .deleteUserApiCredential(email)
-      .then(result => result)
+  deleteUserApiCredential (email) {
+    return apiGatewayService.getUserApiCredential(email)
+      .then(credentials => apiGatewayService.deleteUserApiCredential(email, credentials.data[0].id)
+      .then(result => result))
   },
 
   deleteAllUserTokens (email) {
@@ -131,8 +131,8 @@ module.exports = Object.freeze({
           return token !== null && token !== undefined
         })
         .then(isBlacklisted => {
-          if (!isBlacklisted) {
-            blacklistCheckResult = { message: 'JWT is blacklisted or invalid. FAIL' }
+          if (isBlacklisted) {
+            throw new Errors.TokenVerificationError('JWT is blacklisted or invalid. FAIL')
           } else {
             blacklistCheckResult = {message: `Not blacklisted. OK`}
           }
@@ -140,13 +140,12 @@ module.exports = Object.freeze({
         })
         .catch(err => {
           if (err instanceof CommonErrors.NotFoundError) {
-            blacklistCheckResult = {message: 'JWT is blacklisted or invalid. FAIL'}
-            throw new Errors.TokenVerificationError('JWT is blacklisted or invalid. FAIL')
+            blacklistCheckResult = {message: `Not blacklisted. OK`}
+            return blacklistCheckResult
           }
           throw err
         })
     } else {
-      blacklistCheckResult = {message: 'No JWT. No blacklist check. OK'}
       return Promise.resolve(blacklistCheckResult)
     }
   },

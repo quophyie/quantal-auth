@@ -87,6 +87,33 @@ class ApiGatewayService {
               return Promise.reject(error)
             })
   }
+
+  /**
+   * Deletes user (consumer) on the api gateway i.e.  Kong
+   * @param userId - the email or user id  of the user to be deleted
+   * @param jwtCredentialId - the jwt credential id
+   * @returns {*}
+   */
+  deleteUseFromApiGateway (userId, jwtCredentialId) {
+    logger.info({subEvent: Events.API_CONSUMER_DELETE}, 'deleting consumer (i.e. user) %s from api gateway', userId)
+
+    if (!userId) {
+      const err = new Errors.NullReferenceError('user id / email cannot be null or empty')
+      logger.error({subEvent: Events.API_CONSUMER_DELETE}, err)
+      return Promise.reject(err)
+    }
+
+    const endponint = `${this._apiGatewayEndpoint}${constants.CONSUMERS_URL}/${userId}`
+    return axios.delete(endponint, null, {headers: {'content-type': 'application/json'}})
+      .then((response) => {
+        logger.info({subEvent: Events.API_CONSUMER_DELETE, data: response.data}, 'consumer (i.e. user) successfully for user identified by %s', userId)
+        return response.data
+      })
+      .catch(function (error) {
+        logger.error({subEvent: Events.API_CONSUMER_DELETE}, error)
+        return Promise.reject(error)
+      })
+  }
 }
 
 module.exports = ApiGatewayService
